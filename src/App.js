@@ -10,24 +10,27 @@ import Following from "./pages/Following";
 import SendFeedback from "./pages/SendFeedback";
 import Trending from "./pages/Trending";
 import UserTour from "./pages/UserTour";
+import Sidebar from "./components/Sidebar";
 
 const App = () => {
   return (
     <>
       <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/creator" element={<CreatorAccess />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/discord" element={<Discord />} />
-          <Route path="/following" element={<Following />} />
-          <Route path="/sendfeedback" element={<SendFeedback />} />
-          <Route path="/trending" element={<Trending />} />
-          <Route path="/usertour" element={<UserTour />} />
-          <Route path="*" element={<>Not Found</>} />
-        </Routes>
+        <Sidebar>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/courses" element={<Courses />} />
+            <Route path="/creator" element={<CreatorAccess />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/discord" element={<Discord />} />
+            <Route path="/following" element={<Following />} />
+            <Route path="/sendfeedback" element={<SendFeedback />} />
+            <Route path="/trending" element={<Trending />} />
+            <Route path="/usertour" element={<UserTour />} />
+            <Route path="*" element={<>Not Found</>} />
+          </Routes>
+        </Sidebar>
       </Router>
     </>
   );
