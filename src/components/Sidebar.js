@@ -5,8 +5,10 @@ import { FaHome, FaCompass } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import { ImBooks } from "react-icons/im";
+import { HiOutlineBars3BottomLeft } from "react-icons/hi2";
 import { RiUserFollowFill } from "react-icons/ri";
 import { BsDiscord } from "react-icons/bs";
+import Backdrop from "./Backdrop";
 
 const routes = [
   {
@@ -46,8 +48,8 @@ const routes = [
       <svg
         className="cust-icon"
         xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
+        width="20"
+        height="20"
         viewBox="0 0 50 50"
         fill="currentColor"
       >
@@ -62,8 +64,8 @@ const routes = [
       <svg
         className="cust-icon"
         xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
+        width="20"
+        height="20"
         viewBox="0 0 24 24"
         fill="currentColor"
       >
@@ -80,8 +82,8 @@ const routes = [
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 250.93 250.93"
-        width="16"
-        height="16"
+        width="20"
+        height="20"
         fill="currentColor"
       >
         <path d="m247.896,25.718l-25.083-17.244c-1.167-0.802-2.55-1.232-3.966-1.232h-91.706c-3.866,0-7,3.134-7,7v47.462h-88.06c-1.416,0-2.799,0.43-3.966,1.231l-25.081,17.244c-1.899,1.306-3.034,3.464-3.034,5.769s1.135,4.462 3.034,5.768l25.082,17.244c1.167,0.802 2.55,1.232 3.966,1.232h88.06v119.496h-29.224c-3.866,0-7,3.134-7,7s3.134,7 7,7h69.74c3.866,0 7-3.134 7-7s-3.134-7-7-7h-26.517v-173.959h84.706c1.416,1.42109e-14 2.799-0.43 3.966-1.232l25.082-17.243c1.899-1.306 3.034-3.463 3.034-5.769s-1.134-4.462-3.033-5.767zm-213.64,70.474l-14.9-10.244 14.9-10.244h85.885v20.488h-85.885zm182.417-54.463h-82.532v-20.487h82.532l14.9,10.244-14.9,10.243z"></path>
@@ -91,43 +93,91 @@ const routes = [
 ];
 
 const Sidebar = ({ children }) => {
-  //const [sideBarOpen, setSideBarOpen] = useState(false);
+  const [sideBarOpen, setSideBarOpen] = useState(false);
+
+  //to be moved to the navbar component
+  const sideBarToggle = () => {
+    setSideBarOpen(!sideBarOpen);
+  };
+
+  const custStyle = {
+    flexDirection: "column",
+    width: "80%",
+    gap: "2px",
+    padding: "5px 5px",
+    borderRadius: "5px",
+  };
+
+  const custTextStyle = {
+    fontSize: "0.6rem",
+    fontWeight: "600",
+  };
 
   return (
-    <div className="main-container">
-      <motion.div animate={{ width: "200px" }} className="sidebar">
-        <section className="routes">
-          <div className="scroll-nav">
-            {routes.map((route) => (
-              <NavLink to={route.path} key={route.name} className="link">
-                <div className="icon">{route.icon}</div>
-                <div className="link_name">{route.name}</div>
-              </NavLink>
-            ))}
-          </div>
-          <hr></hr>
-          <div className="logout-btn">
-            <div className="icon">
-              <svg
-                className="cust-icon"
-                width="16"
-                height="16"
-                viewBox="0 0 30 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M23.0303 8.97368C23.0303 7.807 24.4281 7.20869 25.2722 8.01408L28.4777 11.0725C29.3057 11.8625 29.3032 13.1849 28.4722 13.9717L25.2767 16.9977C24.4283 17.8012 23.0303 17.1997 23.0303 16.0312C23.0303 15.296 22.4343 14.7 21.6991 14.7H14.601C13.4964 14.7 12.601 13.8046 12.601 12.7V12.3C12.601 11.1954 13.4964 10.3 14.601 10.3H21.704C22.4365 10.3 23.0303 9.70619 23.0303 8.97368ZM17.4125 19.7824C18.2594 19.2271 19.4002 19.2365 20.1165 19.9523C20.8801 20.7154 20.864 21.9731 19.9909 22.6079C17.7973 24.2026 15.4602 25 12.9798 25C9.3266 25 6.25 23.8042 3.75 21.4125C1.25 19.0208 0 16.0333 0 12.45C0 10.2 0.572391 8.11667 1.71717 6.2C2.86195 4.28333 4.40657 2.77083 6.35101 1.6625C8.29545 0.554167 10.404 0 12.6768 0C15.206 0 17.6285 0.822203 19.9445 2.46661C20.8192 3.08773 20.8497 4.33987 20.0908 5.09828C19.389 5.7997 18.2709 5.80954 17.4454 5.25888C15.9376 4.25296 14.3564 3.75 12.702 3.75C10.1936 3.75 8.0766 4.61667 6.35101 6.35C4.62542 8.08333 3.76263 10.2 3.76263 12.7C3.76263 15.0333 4.65067 17.0417 6.42677 18.725C8.20286 20.4083 10.2862 21.25 12.6768 21.25C14.3417 21.25 15.9203 20.7608 17.4125 19.7824Z"
-                  fill="currentColor"
-                ></path>
-              </svg>
+    <>
+      {sideBarOpen && <Backdrop onClick={sideBarToggle} />}
+      <div className="hamburger">
+        <HiOutlineBars3BottomLeft onClick={sideBarToggle} />
+      </div>
+      <div className="main-container">
+        <motion.div
+          animate={{
+            width: sideBarOpen ? "200px" : "60px",
+            padding: sideBarOpen ? "1rem" : "0.5rem",
+          }}
+          className="sidebar"
+        >
+          <section className="routes">
+            <div className="scroll-nav">
+              {routes.map((route) => (
+                <NavLink
+                  to={route.path}
+                  key={route.name}
+                  className="link"
+                  style={!sideBarOpen ? custStyle : {}}
+                >
+                  <div className="icon">{route.icon}</div>
+                  <div
+                    className="link_name"
+                    style={!sideBarOpen ? custTextStyle : {}}
+                  >
+                    {route.name}
+                  </div>
+                </NavLink>
+              ))}
             </div>
-            <div className="link_name">Logout</div>
-          </div>
-        </section>
-      </motion.div>
-      <main>{children}</main>
-    </div>
+            <hr></hr>
+            <div
+              className="link logout-btn"
+              style={!sideBarOpen ? custStyle : {}}
+            >
+              <div className="icon">
+                <svg
+                  className="cust-icon"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 30 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M23.0303 8.97368C23.0303 7.807 24.4281 7.20869 25.2722 8.01408L28.4777 11.0725C29.3057 11.8625 29.3032 13.1849 28.4722 13.9717L25.2767 16.9977C24.4283 17.8012 23.0303 17.1997 23.0303 16.0312C23.0303 15.296 22.4343 14.7 21.6991 14.7H14.601C13.4964 14.7 12.601 13.8046 12.601 12.7V12.3C12.601 11.1954 13.4964 10.3 14.601 10.3H21.704C22.4365 10.3 23.0303 9.70619 23.0303 8.97368ZM17.4125 19.7824C18.2594 19.2271 19.4002 19.2365 20.1165 19.9523C20.8801 20.7154 20.864 21.9731 19.9909 22.6079C17.7973 24.2026 15.4602 25 12.9798 25C9.3266 25 6.25 23.8042 3.75 21.4125C1.25 19.0208 0 16.0333 0 12.45C0 10.2 0.572391 8.11667 1.71717 6.2C2.86195 4.28333 4.40657 2.77083 6.35101 1.6625C8.29545 0.554167 10.404 0 12.6768 0C15.206 0 17.6285 0.822203 19.9445 2.46661C20.8192 3.08773 20.8497 4.33987 20.0908 5.09828C19.389 5.7997 18.2709 5.80954 17.4454 5.25888C15.9376 4.25296 14.3564 3.75 12.702 3.75C10.1936 3.75 8.0766 4.61667 6.35101 6.35C4.62542 8.08333 3.76263 10.2 3.76263 12.7C3.76263 15.0333 4.65067 17.0417 6.42677 18.725C8.20286 20.4083 10.2862 21.25 12.6768 21.25C14.3417 21.25 15.9203 20.7608 17.4125 19.7824Z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </div>
+              <div
+                className="link_name"
+                style={!sideBarOpen ? custTextStyle : {}}
+              >
+                Logout
+              </div>
+            </div>
+          </section>
+        </motion.div>
+        <main>{children}</main>
+      </div>
+    </>
   );
 };
 
