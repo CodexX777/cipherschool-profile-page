@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { motion } from "framer-motion";
 import "./Sidebar.css";
 import { FaHome, FaCompass } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { MdDashboard } from "react-icons/md";
 import { ImBooks } from "react-icons/im";
-import { HiOutlineBars3BottomLeft } from "react-icons/hi2";
+
 import { RiUserFollowFill } from "react-icons/ri";
 import { BsDiscord } from "react-icons/bs";
 import Backdrop from "./Backdrop";
+import { sideBarContext } from "../context/sideBarContext";
+
 
 const routes = [
   {
@@ -92,13 +94,9 @@ const routes = [
   },
 ];
 
-const Sidebar = ({ children }) => {
-  const [sideBarOpen, setSideBarOpen] = useState(false);
-
-  //to be moved to the navbar component
-  const sideBarToggle = () => {
-    setSideBarOpen(!sideBarOpen);
-  };
+const Sidebar = () => {
+ 
+    const sideBarGlobal=useContext(sideBarContext); 
 
   const custStyle = {
     flexDirection: "column",
@@ -115,15 +113,13 @@ const Sidebar = ({ children }) => {
 
   return (
     <>
-      {sideBarOpen && <Backdrop onClick={sideBarToggle} />}
-      <div className="hamburger">
-        <HiOutlineBars3BottomLeft onClick={sideBarToggle} />
-      </div>
+      {sideBarGlobal.sideBarOpen && <Backdrop onClick={sideBarGlobal.sideBarToggle} />}
+     
       <div className="main-container">
         <motion.div
           animate={{
-            width: sideBarOpen ? "200px" : "60px",
-            padding: sideBarOpen ? "1rem" : "0.5rem",
+            width: sideBarGlobal.sideBarOpen ? "200px" : "60px",
+            padding: sideBarGlobal.sideBarOpen ? "1rem" : "0.5rem",
           }}
           className="sidebar"
         >
@@ -134,12 +130,12 @@ const Sidebar = ({ children }) => {
                   to={route.path}
                   key={route.name}
                   className="link"
-                  style={!sideBarOpen ? custStyle : {}}
+                  style={!sideBarGlobal.sideBarOpen ? custStyle : {}}
                 >
                   <div className="icon">{route.icon}</div>
                   <div
                     className="link_name"
-                    style={!sideBarOpen ? custTextStyle : {}}
+                    style={!sideBarGlobal.sideBarOpen ? custTextStyle : {}}
                   >
                     {route.name}
                   </div>
@@ -149,7 +145,7 @@ const Sidebar = ({ children }) => {
             <hr></hr>
             <div
               className="link logout-btn"
-              style={!sideBarOpen ? custStyle : {}}
+              style={!sideBarGlobal.sideBarOpen ? custStyle : {}}
             >
               <div className="icon">
                 <svg
@@ -168,14 +164,14 @@ const Sidebar = ({ children }) => {
               </div>
               <div
                 className="link_name"
-                style={!sideBarOpen ? custTextStyle : {}}
+                style={!sideBarGlobal.sideBarOpen ? custTextStyle : {}}
               >
                 Logout
               </div>
             </div>
           </section>
         </motion.div>
-        <main>{children}</main>
+        
       </div>
     </>
   );
