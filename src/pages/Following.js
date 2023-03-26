@@ -2,7 +2,7 @@ import React from 'react'
 
 const Following = () => {
   return (
-    <div className='title'>
+    <div className='main-content'>
         <h1>Following</h1>
     </div>
   )

@@ -2,7 +2,7 @@ import React from 'react'
 
 const CreatorAccess = () => {
   return (
-    <div className='title'>
+    <div className='main-content'>
         <h1>Creator Access</h1>
     </div>
   )
