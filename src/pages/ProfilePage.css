@@ -1,0 +1,24 @@
+.User-panel{
+    background-color: aqua;
+    height: 18vh;
+    width: 100%;
+    position: fixed;
+}
+
+.profile-panel{
+    background-color: bisque;
+    height:77vh;
+    max-width: 100%;
+    width: 100%;
+    margin-top:18vh;
+    position: fixed;
+}
+
+.profile-content{
+    max-width: 100%;
+    height: 70vh;
+    overflow-y: scroll;
+    width: 95%;
+    padding-bottom: 2rem;
+
+}
