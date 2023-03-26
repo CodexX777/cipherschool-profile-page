@@ -3,13 +3,18 @@
   color: black;
   height: 98vh;
   padding: 1rem;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.34);
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.34);
   position: fixed;
   z-index: 5;
-}
-.main-container {
   font-size: 1.2rem;
+  width: fit-content;
+  margin-top: 9vh;
 }
+/* .main-container {
+  font-size: 1.2rem;
+  width: fit-content;
+  height: fit-content;
+} */
 .cust-icon {
   font-size: 2rem;
 }
@@ -69,10 +74,6 @@ hr {
 .logout-btn .cust-icon {
   width: fit-content;
   text-align: center;
-}
-
-.hamburger{
-    font-size: 2rem;
 }
 
 .icon{

@@ -115,7 +115,7 @@ const Sidebar = () => {
     <>
       {sideBarGlobal.sideBarOpen && <Backdrop onClick={sideBarGlobal.sideBarToggle} />}
      
-      <div className="main-container">
+      {/* <div className="main-container"> */}
         <motion.div
           animate={{
             width: sideBarGlobal.sideBarOpen ? "200px" : "60px",
@@ -172,7 +172,7 @@ const Sidebar = () => {
           </section>
         </motion.div>
         
-      </div>
+      {/* </div> */}
     </>
   );
 };
