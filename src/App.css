@@ -1,5 +1,15 @@
 *{
   margin:0px;
   padding: 0px;
-  
+
+}
+.main-page{
+  display: flex;
+  flex-direction: row;
+  height: 90vh;
+  width: 100%;
+}
+.main-content{
+  /* margin-left: 80px; */
+  margin-left: 76px;
 }
