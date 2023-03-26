@@ -9,7 +9,14 @@
   height: 90vh;
   width: 100%;
 }
-.main-content{
-  /* margin-left: 80px; */
+.content{
+  max-width: calc(100% - 76px);
+  width: 100%;
+  margin-top: 9vh;
+  height: 91vh;
   margin-left: 76px;
+}
+.main-content{
+  width: 100%;
+  height: 91vh;
 }
