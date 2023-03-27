@@ -11,7 +11,11 @@ const SocialLinks = (props) => {
           <input
             type="url"
             className="link-url"
+            name={props.name}
+            onChange={props.handleChange}
+            value={props.values.name}
             placeholder={props.placeholder}
+            onBlur={props.handleBlur}
             disabled={!props.editState}
           />
           {props.editState && <RiPencilFill/>}
