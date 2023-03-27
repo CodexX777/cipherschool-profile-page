@@ -3,6 +3,8 @@ import "./ProfilePage.css";
 import Avatar from "../components/UIElements/Avatar";
 import { TbEditCircle } from "react-icons/tb";
 import AboutMe from "../components/User/AboutMe";
+import Socials from "../components/User/Socials";
+import ProfInfo from "../components/User/ProfInfo";
 
 let avatarUrl =
   "https://lh3.googleusercontent.com/a/AGNmyxYRv_XBjPojMWq3Uv__44TEpK3JMtkqfPTxTo-oBw=s96-c";
@@ -17,7 +19,7 @@ const ProfilePage = () => {
       <div className="User-panel">
         <div className="user-content">
           <Avatar
-            className='user-avatar'
+            className="user-avatar"
             height="5"
             width="5"
             src={avatarUrl}
@@ -37,16 +39,13 @@ const ProfilePage = () => {
           <h3>{followers} Followers</h3>
         </div>
       </div>
-      <AboutMe />
 
+      <div className="profile-content">
+        <AboutMe />
+        <Socials />
+        <ProfInfo />
+      </div>
 
-      {/* <div className="main-content">
-        <div className="User-panel">
-         
-        <div className="profile-panel">
-          <div className="profile-content"></div>
-        </div>
-      </div> */}
     </>
   );
 };

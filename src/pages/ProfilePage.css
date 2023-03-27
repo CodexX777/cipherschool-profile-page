@@ -1,7 +1,7 @@
 .User-panel {
   max-height: 18vh;
-  width: 100%;
-  /* position: fixed; */
+  width: 95%;
+  position: fixed;
   display: flex;
   background-image: url(../utility/profileData_bg.png);
   background-position: 50%;
@@ -11,7 +11,7 @@
   align-content: center;
   justify-content: space-between;
   border-bottom:1px solid rgba(150, 150, 150, 1) ;
-  z-index: 1;
+  z-index: 100;
 }
 .User-panel::before,
 .User-panel::after {
@@ -20,7 +20,7 @@
   top: 0;
   width: 50%;
   height: 18vh;
-  margin-top: 11vh;
+
   z-index: 1;
 }
 
@@ -106,10 +106,10 @@
 }
 
 .profile-content {
-  max-width: 100%;
-  height: fit-content;
-  overflow-y: scroll;
-  width: 97%;
-  padding-bottom: 2rem;
-
+  position: fixed;
+  overflow-y: auto;
+  margin-top: 18vh;
+  background-color: #F2F5FA;
+  max-height: 71vh;
+  z-index: 99;
 }
