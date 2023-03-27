@@ -23,5 +23,8 @@
     gap:0.5rem;
     flex-direction: column;
     width:48%;
+}
 
+.profile-info hr{
+    margin-top:1rem;
 }

@@ -44,8 +44,10 @@ const ProfInfo = () => {
             </option>
             <option value="Freelancing">Freelancing</option>
           </select>
+          
         </div>
       </div>
+      <hr></hr>
     </div>
   );
 };
