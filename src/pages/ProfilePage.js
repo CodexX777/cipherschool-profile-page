@@ -5,6 +5,8 @@ import { TbEditCircle } from "react-icons/tb";
 import AboutMe from "../components/User/AboutMe";
 import Socials from "../components/User/Socials";
 import ProfInfo from "../components/User/ProfInfo";
+import Password from "../components/User/Password";
+import Interests from "../components/User/Interests";
 
 let avatarUrl =
   "https://lh3.googleusercontent.com/a/AGNmyxYRv_XBjPojMWq3Uv__44TEpK3JMtkqfPTxTo-oBw=s96-c";
@@ -44,6 +46,8 @@ const ProfilePage = () => {
         <AboutMe />
         <Socials />
         <ProfInfo />
+        <Password />
+        <Interests />
       </div>
 
     </>
