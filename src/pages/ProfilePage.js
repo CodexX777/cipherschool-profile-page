@@ -7,6 +7,7 @@ import Socials from "../components/User/Socials";
 import ProfInfo from "../components/User/ProfInfo";
 import Password from "../components/User/Password";
 import Interests from "../components/User/Interests";
+import Heatmap from "../components/UIElements/Heatmap";
 
 let avatarUrl =
   "https://lh3.googleusercontent.com/a/AGNmyxYRv_XBjPojMWq3Uv__44TEpK3JMtkqfPTxTo-oBw=s96-c";
@@ -44,6 +45,7 @@ const ProfilePage = () => {
 
       <div className="profile-content">
         <AboutMe />
+        {/* <Heatmap /> */}
         <Socials />
         <ProfInfo />
         <Password />
