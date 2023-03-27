@@ -10,6 +10,9 @@ import { GoMarkGithub } from "react-icons/go";
 import { BsFacebook } from "react-icons/bs";
 import { VscGlobe } from "react-icons/vsc";
 import SocialLinks from "../UIElements/SocialLinks";
+import { LinkSchema } from "../../Schema/LinksSchema";
+import { useFormik } from "formik";
+
 
 const socialLinks = [
   {
@@ -46,10 +49,38 @@ const socialLinks = [
 
 const Socials = () => {
   const [editState, setEditState] = useState(false);
+ 
+
+  const initialValues = {
+    LinkedIn: "",
+    Twitter: "",
+    Facebook: "",
+    Instagram: "",
+    Website: "",
+    Github: "",
+  };
+
   const socialSubmitHandler = (btnState, setBtnState) => {
+    if(btnState==true){
+      handleSubmit();
+    }
     setBtnState(!btnState);
     setEditState(!editState);
+
   };
+
+  const linkSubmitHandler = (event) => {
+    console.log(event);
+
+  };
+  const { values, handleBlur, touched, handleChange, errors, handleSubmit } =
+    useFormik({
+      initialValues: initialValues,
+      validationSchema: LinkSchema,
+      onSubmit: linkSubmitHandler,
+    });
+
+
 
   return (
     <>
@@ -60,17 +91,22 @@ const Socials = () => {
           onFalse="Edit"
           submitHandler={socialSubmitHandler}
         />
-        <div className="link-section">
-          {socialLinks.map((link) => (
-            <SocialLinks
-              key={link.LinkName}
-              name={link.LinkName}
-              placeholder={link.placeholder}
-              icon={link.icon}
-              editState={editState}
-            />
-          ))}
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="link-section">
+            {socialLinks.map((link) => (
+              <SocialLinks
+                key={link.LinkName}
+                name={link.LinkName}
+                placeholder={link.placeholder}
+                values={values}
+                icon={link.icon}
+                handleChange={handleChange}
+                onBlur={handleBlur}
+                editState={editState}
+              />
+            ))}
+          </div>
+        </form>
         <hr></hr>
       </div>
     </>

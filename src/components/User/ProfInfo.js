@@ -1,11 +1,28 @@
 import React, { useState } from "react";
 import Heading from "../UIElements/Heading";
 import "./ProfInfo.css";
+import { useFormik } from "formik";
 
 const ProfInfo = () => {
   const [editInfo, setEditInfo] = useState(false);
 
-  const infoSubmitHandler = (btnState, setBtnState) => {
+  const initialValues = {
+    education: "Graduation",
+    occupation: "College Student",
+  };
+
+  const infoSubmitHandler = (event) => {
+    console.log(event);
+  };
+  const formik = useFormik({
+    initialValues,
+    onSubmit: infoSubmitHandler, // You can handle the form submission here
+  });
+
+  const btnStateHandler = (btnState, setBtnState) => {
+    if (btnState == true) {
+      formik.handleSubmit();
+    }
     setBtnState(!btnState);
     setEditInfo(!editInfo);
   };
@@ -16,38 +33,47 @@ const ProfInfo = () => {
         onTrue="Save"
         onFalse="Edit"
         Label="PROFESSIONAL INFORMATION"
-        submitHandler={infoSubmitHandler}
+        submitHandler={btnStateHandler}
       />
-      <div className="info-selector">
-        <div className="selector-panel">
-          <label htmlFor="cars">Highest Education</label>
-          <select id="education"  defaultValue={"Graduation"} name="education">
-            <option value="Primary">Primary</option>
-            <option value="Secondary">Secondary</option>
-            <option value="Higher Secondary">Higher Secondary</option>
-            <option value="Graduation" >
-              Graduation
-            </option>
-            <option value="Post Graduation">Post Graduation</option>
-          </select>
+      <form onSubmit={formik.handleSubmit}>
+        <div className="info-selector">
+          <div className="selector-panel">
+            <label htmlFor="education">Highest Education</label>
+            <select
+              id="education"
+              name="education"
+              disabled={!editInfo}
+              value={formik.values.education}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            >
+              <option value="Primary">Primary</option>
+              <option value="Secondary">Secondary</option>
+              <option value="Higher Secondary">Higher Secondary</option>
+              <option value="Graduation">Graduation</option>
+              <option value="Post Graduation">Post Graduation</option>
+            </select>
+          </div>
+          <div className="selector-panel">
+            <label htmlFor="occupation">What do you do currently?</label>
+            <select
+              disabled={!editInfo}
+              id="occupation"
+              name="occupation"
+              value={formik.values.occupation}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            >
+              <option value="Schooling">Schooling</option>
+              <option value="College Student">College Student</option>
+              <option value="Teaching">Teaching</option>
+              <option value="Job">Job</option>
+              <option value="Freelancing">Freelancing</option>
+            </select>
+          </div>
         </div>
-        <div className="selector-panel">
-          <label htmlFor="cars">What do you do currently?</label>
-          <select id="occupation" defaultValue={"College Student"} name="occupation" >
-            <option value="Schooling">Schooling</option>
-            <option value="College Student">
-              College Student
-            </option>
-            <option value="Teaching">Teaching</option>
-            <option value="Job">
-              Job
-            </option>
-            <option value="Freelancing">Freelancing</option>
-          </select>
-          
-        </div>
-      </div>
-      <hr></hr>
+        <hr></hr>
+      </form>
     </div>
   );
 };
