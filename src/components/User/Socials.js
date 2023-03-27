@@ -9,7 +9,7 @@ import {
 import { GoMarkGithub } from "react-icons/go";
 import { BsFacebook } from "react-icons/bs";
 import { VscGlobe } from "react-icons/vsc";
-import { RiPencilFill } from "react-icons/ri";
+import SocialLinks from "../UIElements/SocialLinks";
 
 const socialLinks = [
   {
@@ -62,21 +62,13 @@ const Socials = () => {
         />
         <div className="link-section">
           {socialLinks.map((link) => (
-            <div className="link-panel">
-              <div className="link-heading">{link.LinkName}</div>
-              <div className="link-field">
-                <div className="link-icon">{link.icon}</div>
-                <div className="link-input">
-                  <input
-                    type="url"
-                    className="link-url"
-                    placeholder={link.placeholder}
-                    disabled={!editState}
-                  />
-                  {editState && <RiPencilFill />}
-                </div>
-              </div>
-            </div>
+            <SocialLinks
+              key={link.LinkName}
+              name={link.LinkName}
+              placeholder={link.placeholder}
+              icon={link.icon}
+              editState={editState}
+            />
           ))}
         </div>
         <hr></hr>
