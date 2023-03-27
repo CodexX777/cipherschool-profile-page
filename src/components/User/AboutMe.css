@@ -5,7 +5,7 @@
     gap: 1.5rem;
 }
 
-.about-me-panel hr{
+hr{
     font-size: 0.01rem;
     border-color:rgba(129, 129, 129, 0.181); ;
 }
@@ -14,12 +14,6 @@
     background-color:#2C3D4F;
 }
 
-.about-heading{
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
-    align-items: center;
-}
 
 .aboutme-input_section{
     background-color: white;
@@ -37,18 +31,4 @@
 }
 
 
-.aboutme-btn{
-    color: white;
-    width: 4.6rem;
-    font-size: 0.8rem;
-    height: 1.7rem;
-    border-radius: 0.3rem;
-    outline: none;
-    border: none;
-    background-color: #F3912E;
-}
-
-.aboutme-btn:hover{
-    background-color: #F3AA61;
-}
 

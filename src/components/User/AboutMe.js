@@ -1,25 +1,27 @@
 import React, { useState } from "react";
+import Heading from "../UIElements/Heading";
 import "./AboutMe.css";
 
 const AboutMe = () => {
-  const [editAbout, setEditAbout] = useState(false);
+    const aboutSubmitHandler=(btnState,setBtnState)=>{
+        setBtnState(!btnState);
+
+    }
+
 
   return (
     <div className="about-me-panel">
-      <div className="about-heading">
-        <h4>ABOUT ME</h4>
-        <button
-          onClick={() => {
-            setEditAbout(!editAbout);
-          }}
-
-          className="aboutme-btn"
-        >
-          {editAbout ? "Save" : "Edit"}
-        </button>
-      </div>
+      <Heading
+        Label="ABOUT ME"
+        onTrue="Save"
+        onFalse="Edit"
+        submitHandler={aboutSubmitHandler}
+      />
       <div className="aboutme-input_section">
-        <textarea className="about-input" placeholder="Add something about you."/>
+        <textarea
+          className="about-input"
+          placeholder="Add something about you."
+        />
       </div>
       <hr></hr>
     </div>
