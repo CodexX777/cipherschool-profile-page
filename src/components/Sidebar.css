@@ -1,14 +1,14 @@
 .sidebar {
   background: white;
   color: black;
-  height: 98vh;
+  height: 95vh;
   padding: 1rem;
   box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.34);
   position: fixed;
-  z-index: 5;
+  z-index: 800;
   font-size: 1.2rem;
   width: fit-content;
-  margin-top: 9vh;
+  /* margin-top: 11vh; */
 }
 /* .main-container {
   font-size: 1.2rem;
