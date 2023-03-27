@@ -84,7 +84,6 @@ const MainNav = () => {
               width="17"
               height="16"
               viewBox="0 0 20 16"
-              class="nav-search-icon"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -105,8 +104,9 @@ const MainNav = () => {
           <span className="notif-badge">{notification}</span>
         </div>
         <Avatar
-          height="22px"
-          width="22px"
+          className="nav-avatar"
+          height="1.5"
+          width="1.5"
           src={avatarUrl}
           alt="account avatar"
           onClick={accountToggle}
@@ -127,7 +127,7 @@ const MainNav = () => {
           viewBox="0 0 26 25"
           fill="none"
         >
-          <g clip-path="url(#clip0_1637:22987)">
+          <g clipPath="url(#clip0_1637:22987)">
             <path
               d="M24.5552 12.5C24.5552 19.135 19.2639 24.5 12.7536 24.5C6.24329 24.5 0.952026 19.135 0.952026 12.5C0.952026 5.86501 6.24329 0.5 12.7536 0.5C19.2639 0.5 24.5552 5.86501 24.5552 12.5Z"
               stroke="#222831"
