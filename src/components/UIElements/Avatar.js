@@ -2,15 +2,15 @@ import "./Avatar.css";
 const Avatar = (props) => {
   return (
     <div
-      className="avatar"
-      style={{ width: `${props.width}`, height: `${props.height}` }}
+      className={`avatar _${props.className}`}
+      style={{ width: `${props.width}rem`, height: `${props.height}rem` }}
       onClick={props.onClick}
     >
       <img
         src={props.src}
         alt={props.alt}
-        width={props.width}
-        height={props.height}
+        width='100%'
+        height='100%'
       />
     </div>
   );
