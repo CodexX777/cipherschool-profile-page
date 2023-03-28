@@ -12,6 +12,10 @@ import { VscGlobe } from "react-icons/vsc";
 import SocialLinks from "../UIElements/SocialLinks";
 import { LinkSchema } from "../../Schema/LinksSchema";
 import { useFormik } from "formik";
+import axios from "axios";
+
+
+let uid = "";
 
 
 const socialLinks = [
@@ -49,7 +53,6 @@ const socialLinks = [
 
 const Socials = () => {
   const [editState, setEditState] = useState(false);
- 
 
   const initialValues = {
     LinkedIn: "",
@@ -61,17 +64,34 @@ const Socials = () => {
   };
 
   const socialSubmitHandler = (btnState, setBtnState) => {
-    if(btnState==true){
+    if (btnState == true) {
       handleSubmit();
     }
     setBtnState(!btnState);
     setEditState(!editState);
-
   };
 
   const linkSubmitHandler = (event) => {
+    event={
+      "userLinks":event
+    }
+    axios
+      .patch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/user/profile-details/socials/${uid}`,
+        event,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     console.log(event);
-
   };
   const { values, handleBlur, touched, handleChange, errors, handleSubmit } =
     useFormik({
@@ -79,8 +99,6 @@ const Socials = () => {
       validationSchema: LinkSchema,
       onSubmit: linkSubmitHandler,
     });
-
-
 
   return (
     <>

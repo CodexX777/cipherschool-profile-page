@@ -5,6 +5,10 @@ import "./Password.css";
 import { useFormik } from "formik";
 import { ChangePassword } from "../../Schema/ChangePassword";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import axios from "axios";
+
+
+let uid = "";
 
 const Password = () => {
   const [showModal, setShowModal] = useState(false);
@@ -27,9 +31,26 @@ const Password = () => {
     }
   };
 
-  const passwordSubmitHandler = (event,{resetForm}) => {
-    console.log("hello");
+  const passwordSubmitHandler = (event, { resetForm }) => {
     //connect with backend
+    event["uid"] = uid;
+
+    axios
+      .patch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/user/password/reset`,
+        event,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     console.log(event);
     closeModalHandler();
     resetForm();
@@ -50,12 +71,19 @@ const Password = () => {
     ConfirmPassword: "",
   };
 
-  const { values, handleBlur, touched, handleChange, errors, handleSubmit,resetForm } =
-    useFormik({
-      initialValues: initialValues,
-      validationSchema: ChangePassword,
-      onSubmit: passwordSubmitHandler,
-    });
+  const {
+    values,
+    handleBlur,
+    touched,
+    handleChange,
+    errors,
+    handleSubmit,
+    resetForm,
+  } = useFormik({
+    initialValues: initialValues,
+    validationSchema: ChangePassword,
+    onSubmit: passwordSubmitHandler,
+  });
 
   return (
     <>

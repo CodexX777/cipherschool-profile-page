@@ -2,13 +2,36 @@ import React, { useState } from "react";
 import Heading from "../UIElements/Heading";
 import "./AboutMe.css";
 import { useFormik } from "formik";
+import axios from "axios";
+
+let uid = "6422f102410e54cf48c818db";
 
 const AboutMe = () => {
+
+  const [aboutMeText,setAboutMeText]=useState("");
+
   const initialValues = {
-    AboutMe: "",
+    AboutMe: aboutMeText,
   };
   const aboutSubmitHandler = (event) => {
-    console.log(event)
+    setAboutMeText(event.AboutMe);
+    console.log(event);
+    axios
+      .patch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/user/profile-details/about/${uid}`,
+        event,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   const { values, handleBlur, touched, handleChange, errors, handleSubmit } =
     useFormik({
@@ -16,9 +39,9 @@ const AboutMe = () => {
       onSubmit: aboutSubmitHandler,
     });
 
-    const [editState,setEditState]=useState(false);
+  const [editState, setEditState] = useState(false);
   const btnSubmitHandler = (btnState, setBtnState) => {
-    if(btnState==true){
+    if (btnState == true) {
       handleSubmit();
     }
     setBtnState(!btnState);

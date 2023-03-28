@@ -4,11 +4,14 @@ import "./Interests.css";
 import Modal from "../UIElements/Modal";
 import { useFormik } from "formik";
 import InterestList from "./InterestList";
+import axios from "axios";
 
 const initialValues = {
   options: [],
 };
 
+
+let uid = "";
 const options = [
   { name: "App Development", id: 0 },
   { name: "Web Development", id: 1 },
@@ -25,6 +28,24 @@ const Interests = () => {
   const [showModal, setShowModal] = useState(false);
 
   const interestSubmitHandler = (event) => {
+    axios
+    .patch(
+      `${process.env.REACT_APP_BACKEND_URL}/api/user/profile-details/interests/${uid}`,
+      event,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+
     console.log(event);
     formik.resetForm();
     closeModalHandler();

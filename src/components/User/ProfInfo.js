@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import Heading from "../UIElements/Heading";
 import "./ProfInfo.css";
 import { useFormik } from "formik";
+import axios from "axios";
+
+
+
+let uid = "";
 
 const ProfInfo = () => {
   const [editInfo, setEditInfo] = useState(false);
@@ -12,6 +17,29 @@ const ProfInfo = () => {
   };
 
   const infoSubmitHandler = (event) => {
+
+    event={
+      profInfo:event
+    }
+
+    axios
+    .patch(
+      `${process.env.REACT_APP_BACKEND_URL}/api/user/profile-details/profinfo/${uid}`,
+      event,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+
     console.log(event);
   };
   const formik = useFormik({
