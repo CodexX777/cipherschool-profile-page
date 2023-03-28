@@ -1,7 +1,7 @@
 import React from "react";
 
 const InterestList = (props) => {
-  console.log(props.selectedOptions);
+//   console.log(props.selectedOptions);
   return (
     <div className="interests-list">
       {props.selectedOptions.map((option) => (
