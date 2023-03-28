@@ -31,7 +31,7 @@ const Password = () => {
     }
   };
 
-  const passwordSubmitHandler = (event, { resetForm }) => {
+  const passwordSubmitHandler = async(event, { resetForm }) => {
     //connect with backend
     event["uid"] = uid;
 

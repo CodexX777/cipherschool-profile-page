@@ -16,7 +16,7 @@ const ProfInfo = () => {
     occupation: "College Student",
   };
 
-  const infoSubmitHandler = (event) => {
+  const infoSubmitHandler = async(event) => {
 
     event={
       profInfo:event

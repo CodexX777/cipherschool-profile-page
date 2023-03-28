@@ -13,7 +13,7 @@ const AboutMe = () => {
   const initialValues = {
     AboutMe: aboutMeText,
   };
-  const aboutSubmitHandler = (event) => {
+  const aboutSubmitHandler = async(event) => {
     setAboutMeText(event.AboutMe);
     console.log(event);
     axios

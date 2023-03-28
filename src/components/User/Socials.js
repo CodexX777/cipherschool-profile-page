@@ -71,7 +71,7 @@ const Socials = () => {
     setEditState(!editState);
   };
 
-  const linkSubmitHandler = (event) => {
+  const linkSubmitHandler = async(event) => {
     event={
       "userLinks":event
     }

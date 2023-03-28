@@ -37,7 +37,7 @@ const ProfilePage = () => {
     setShowProfileModal(false);
   };
 
-  const profileSubmitHandler = (event) => {
+  const profileSubmitHandler = async(event) => {
     console.log(event);
 
     const formData = new FormData();

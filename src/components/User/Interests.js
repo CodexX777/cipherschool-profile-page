@@ -27,7 +27,7 @@ const Interests = () => {
 
   const [showModal, setShowModal] = useState(false);
 
-  const interestSubmitHandler = (event) => {
+  const interestSubmitHandler = async(event) => {
     axios
     .patch(
       `${process.env.REACT_APP_BACKEND_URL}/api/user/profile-details/interests/${uid}`,
