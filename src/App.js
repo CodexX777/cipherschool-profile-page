@@ -10,29 +10,58 @@ import Following from "./pages/Following";
 import SendFeedback from "./pages/SendFeedback";
 import Trending from "./pages/Trending";
 import UserTour from "./pages/UserTour";
-import Sidebar from "./components/Sidebar";
-import MainNav from "./components/Navbar/MainNav";
-import { sideBarContext } from "./context/sideBarContext";
+import { useAuth } from "./hook/auth-hook";
+import { AuthContext } from "./context/AuthContext";
+
 import ProfilePage from "./pages/ProfilePage";
 import Navigation from "./components/Navbar/Navigation";
 
 const App = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
 
-  //to be moved to the navbar component
+ 
   const sideBarToggle = useCallback(() => {
     setSideBarOpen(!sideBarOpen);
   }, [sideBarOpen]);
 
-  //   return <Navigation />;
-  // };
+  const {
+    uid,
+    login,
+    logout,
+    isLoggedIn,
+    firstName,
+    lastName,
+    interest,
+    links,
+    profilePic,
+    professionalInfo,
+    email,
+    aboutMe,
+    phoneNo,
+  } = useAuth();
+
+  
 
   return (
-    <sideBarContext.Provider
+    <AuthContext.Provider
       value={{
         sideBarToggle,
         sideBarOpen,
+        uid,
+        login,
+        logout,
+        isLoggedIn,
+        firstName,
+        lastName,
+        interest,
+        links,
+        profilePic,
+        professionalInfo,
+        email,
+        aboutMe,
+        phoneNo,
       }}
+
     >
       <BrowserRouter>
         <Navigation>
@@ -50,15 +79,8 @@ const App = () => {
             <Route path="*" element={<>Not Found</>} />
           </Routes>
         </Navigation>
-        {/* <div className="main-page">
-          <Sidebar />
-          <div className="content"> */}
-        {/*  */}
-        {/* </div>
-        </div> */}
       </BrowserRouter>
-      {/* <MainNav /> */}
-    </sideBarContext.Provider>
+    </AuthContext.Provider>
   );
 };
 
