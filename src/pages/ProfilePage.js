@@ -7,7 +7,7 @@ import Socials from "../components/User/Socials";
 import ProfInfo from "../components/User/ProfInfo";
 import Password from "../components/User/Password";
 import Interests from "../components/User/Interests";
-import Heatmap from "../components/UIElements/Heatmap";
+// import Heatmap from "../components/UIElements/Heatmap";
 import { ProfileSchema } from "../Schema/ProfileSchema";
 import Modal from "../components/UIElements/Modal";
 import { useFormik } from "formik";

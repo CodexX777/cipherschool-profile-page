@@ -1,0 +1,9 @@
+.heatmap {
+    position: relative;
+  }
+  
+  .heatmap-cell {
+    position: absolute;
+    border: 1px solid #fff;
+  }
+  
