@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import "./Sidebar.css";
 import { FaHome, FaCompass } from "react-icons/fa";
@@ -9,8 +9,12 @@ import { ImBooks } from "react-icons/im";
 import { RiUserFollowFill } from "react-icons/ri";
 import { BsDiscord } from "react-icons/bs";
 import Backdrop from "./Backdrop";
-import { sideBarContext } from "../context/sideBarContext";
+// import { sideBarContext } from "../context/sideBarContext";
+import { AuthContext } from "../context/AuthContext";
+import SignUpForm from "./UIElements/SignUpForm";
+import LoginForm from "./UIElements/LoginForm";
 
+import axios from "axios";
 
 const routes = [
   {
@@ -95,8 +99,9 @@ const routes = [
 ];
 
 const Sidebar = () => {
- 
-    const sideBarGlobal=useContext(sideBarContext); 
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authState, setAuthState] = useState(true); //login = false
+  const auth = useContext(AuthContext);
 
   const custStyle = {
     flexDirection: "column",
@@ -111,41 +116,133 @@ const Sidebar = () => {
     fontWeight: "600",
   };
 
+  const authSubmitHandler = async (event, { resetForm }) => {
+    // console.log(event);
+    try {
+      let user;
+      if (authState) {
+        //signup
+        axios
+          .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/signup`, event, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((response) => {
+            user=response.data;
+            console.log(user);
+            auth.login(
+              user.uid,
+              user.token,
+              user.FirstName,
+              user.LastName,
+              user.Email,
+              user.Links,
+              user.Interests,
+              user.ProfessionalInfo,
+              user.ExpirationDate,
+              user.ProfilePic,
+              user.AboutMe,
+              user.PhoneNo
+            );
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        
+      } else {
+        //login
+        axios
+          .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/login`, event, {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          .then((response) => {
+            user=response.data;
+            auth.login(
+              user.uid,
+              user.token,
+              user.FirstName,
+              user.LastName,
+              user.Email,
+              user.Links,
+              user.Interests,
+              user.ProfessionalInfo,
+              user.ExpirationDate,
+              user.ProfilePic,
+              user.AboutMe,
+              user.PhoneNo
+            );
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+         
+      }
+    } catch (error) {}
+
+    resetForm();
+    closeModalHandler();
+  };
+
+  const closeModalHandler = () => {
+    setShowAuthModal(false);
+  };
+
   return (
     <>
-      {sideBarGlobal.sideBarOpen && <Backdrop onClick={sideBarGlobal.sideBarToggle} />}
-     
-      {/* <div className="main-container"> */}
-        <motion.div
-          animate={{
-            width: sideBarGlobal.sideBarOpen ? "200px" : "60px",
-            padding: sideBarGlobal.sideBarOpen ? "1rem" : "0.5rem",
-          }}
-          className="sidebar"
-        >
-          <section className="routes">
-            <div className="scroll-nav">
-              {routes.map((route) => (
-                <NavLink
-                  to={route.path}
-                  key={route.name}
-                  className="link"
-                  style={!sideBarGlobal.sideBarOpen ? custStyle : {}}
+      {auth.sideBarOpen && (
+        <Backdrop onClick={auth.sideBarToggle} />
+      )}
+
+      {authState ? (
+        <SignUpForm
+          authSubmitHandler={authSubmitHandler}
+          closeModalHandler={closeModalHandler}
+          showAuthModal={showAuthModal}
+          setAuthState={setAuthState}
+        />
+      ) : (
+        <LoginForm
+          authSubmitHandler={authSubmitHandler}
+          closeModalHandler={closeModalHandler}
+          showAuthModal={showAuthModal}
+          setAuthState={setAuthState}
+        />
+      )}
+      <motion.div
+        animate={{
+          width: auth.sideBarOpen ? "200px" : "60px",
+          padding: auth.sideBarOpen ? "1rem" : "0.5rem",
+        }}
+        className="sidebar"
+      >
+        <section className="routes">
+          <div className="scroll-nav">
+            {routes.map((route) => (
+              <NavLink
+                to={route.path}
+                key={route.name}
+                className="link"
+                style={!auth.sideBarOpen ? custStyle : {}}
+              >
+                <div className="icon">{route.icon}</div>
+                <div
+                  className="link_name"
+                  style={!auth.sideBarOpen ? custTextStyle : {}}
                 >
-                  <div className="icon">{route.icon}</div>
-                  <div
-                    className="link_name"
-                    style={!sideBarGlobal.sideBarOpen ? custTextStyle : {}}
-                  >
-                    {route.name}
-                  </div>
-                </NavLink>
-              ))}
-            </div>
-            <hr></hr>
+                  {route.name}
+                </div>
+              </NavLink>
+            ))}
+          </div>
+          <hr></hr>
+          {auth.isLoggedIn ? (
             <div
               className="link logout-btn"
-              style={!sideBarGlobal.sideBarOpen ? custStyle : {}}
+              style={!auth.sideBarOpen ? custStyle : {}}
+              onClick={auth.logout}
             >
               <div className="icon">
                 <svg
@@ -164,15 +261,45 @@ const Sidebar = () => {
               </div>
               <div
                 className="link_name"
-                style={!sideBarGlobal.sideBarOpen ? custTextStyle : {}}
+                style={!auth.sideBarOpen ? custTextStyle : {}}
               >
                 Logout
               </div>
             </div>
-          </section>
-        </motion.div>
-        
-      {/* </div> */}
+          ) : (
+            <div
+              className="link logout-btn"
+              style={!auth.sideBarOpen ? custStyle : {}}
+              onClick={() => setShowAuthModal(true)}
+            >
+              <div className="icon">
+                <svg
+                  width="25"
+                  height="25"
+                  viewBox="0 0 30 25"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M17.4125 19.7824C18.2594 19.2271 19.4002 19.2365 20.1165 19.9523C20.8801 20.7154 20.864 21.9731 19.9909 22.6079C17.7973 24.2026 15.4602 25 12.9798 25C9.3266 25 6.25 23.8042 3.75 21.4125C1.25 19.0208 0 16.0333 0 12.45C0 10.2 0.572391 8.11667 1.71717 6.2C2.86195 4.28333 4.40657 2.77083 6.35101 1.6625C8.29545 0.554167 10.404 0 12.6768 0C15.206 0 17.6285 0.822203 19.9445 2.46661C20.8192 3.08773 20.8497 4.33987 20.0908 5.09828C19.389 5.7997 18.2709 5.80954 17.4454 5.25888C15.9376 4.25296 14.3564 3.75 12.702 3.75C10.1936 3.75 8.0766 4.61667 6.35101 6.35C4.62542 8.08333 3.76263 10.2 3.76263 12.7C3.76263 15.0333 4.65067 17.0417 6.42677 18.725C8.20286 20.4083 10.2862 21.25 12.6768 21.25C14.3417 21.25 15.9203 20.7608 17.4125 19.7824Z"
+                    fill="currentColor"
+                  ></path>
+                  <path
+                    d="M14.1233 13.9275L17.3288 16.9859C18.1729 17.7913 19.5707 17.193 19.5707 16.0263C19.5707 15.2938 20.1645 14.7 20.897 14.7L28 14.7C29.1046 14.7 30 13.8046 30 12.7L30 12.3C30 11.1954 29.1046 10.3 28 10.3L20.9019 10.3C20.1667 10.3 19.5707 9.70402 19.5707 8.96884C19.5707 7.80031 18.1727 7.19882 17.3243 8.00228L14.1288 11.0283C13.2978 11.8151 13.2953 13.1375 14.1233 13.9275Z"
+                    fill="currentColor"
+                  ></path>
+                </svg>
+              </div>
+              <div
+                className="link_name"
+                style={!auth.sideBarOpen ? custTextStyle : {}}
+              >
+                Login
+              </div>
+            </div>
+          )}
+        </section>
+      </motion.div>
     </>
   );
 };
