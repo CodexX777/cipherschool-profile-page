@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import "./ProfilePage.css";
 import Avatar from "../components/UIElements/Avatar";
 import { TbEditCircle } from "react-icons/tb";
@@ -8,6 +8,9 @@ import ProfInfo from "../components/User/ProfInfo";
 import Password from "../components/User/Password";
 import Interests from "../components/User/Interests";
 import Heatmap from "../components/UIElements/Heatmap";
+import { ProfileSchema } from "../Schema/ProfileSchema";
+import Modal from "../components/UIElements/Modal";
+import { useFormik } from "formik";
 
 let avatarUrl =
   "https://lh3.googleusercontent.com/a/AGNmyxYRv_XBjPojMWq3Uv__44TEpK3JMtkqfPTxTo-oBw=s96-c";
@@ -17,8 +20,170 @@ let UserMail = "shivang260279@gmail.com";
 let followers = 0;
 
 const ProfilePage = () => {
+  const [showProfileModal, setShowProfileModal] = useState(false);
+
+  const [preview, setPreview] = useState({});
+
+  const filePicker = useRef();
+
+  const pickImageHandler = () => {
+    filePicker.current.click();
+  };
+
+  const closeModalHandler = () => {
+    setShowProfileModal(false);
+  };
+
+  const profileSubmitHandler = (event) => {
+    console.log(event);
+    closeModalHandler();
+  };
+
+  const initialValues = {
+    FirstName: "",
+    LastName: "",
+    Email: "",
+    PhoneNo: 0,
+    file: null,
+  };
+
+  const {
+    values,
+    handleBlur,
+    touched,
+    handleChange,
+    errors,
+    handleSubmit,
+    setFieldValue,
+    resetForm,
+  } = useFormik({
+    initialValues: initialValues,
+    validationSchema: ProfileSchema,
+    onSubmit: profileSubmitHandler,
+  });
+
+  if (values.file) {
+    const reader = new FileReader();
+    reader.readAsDataURL(values.file);
+    reader.onload = () => {
+      setPreview(reader.result);
+    };
+  }
+
   return (
     <>
+      <Modal
+        show={showProfileModal}
+        onCancel={closeModalHandler}
+        header={"Password"}
+        contentClass="place-item__modal-content"
+        footerClass="place-item__modal-actions"
+        onSubmit={handleSubmit}
+        footer={
+          <div className="password_footer">
+            <button
+              className="cancel_btn"
+              type="button"
+              onClick={closeModalHandler}
+            >
+              Close
+            </button>
+            <button type="submit" className="save_btn">
+              Save
+            </button>
+          </div>
+        }
+      >
+        <div className="profile-edit-panel-layout">
+          <div className="profile-pic-panel">
+            <div className="profile-panel-heading">Profile Update</div>
+            <div className="profile-pic-update">
+              <Avatar
+                className="user-avatar"
+                height="6"
+                width="6"
+                src={Object.keys(preview).length ? preview : avatarUrl}
+                alt="account avatar"
+              />
+              <div className="pic-edit-cont">
+                <TbEditCircle className="pic-edit" onClick={pickImageHandler} />
+              </div>
+            </div>
+          </div>
+          <div className="password-chg-panel">
+            <div className="password-input-panel">
+              <p>First Name</p>
+              <div className="input-field">
+                <input
+                  type="text"
+                  name="FirstName"
+                  required
+                  id="FirstName"
+                  placeholder="First Name"
+                  value={values.FirstName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </div>
+            </div>
+            <div className="password-input-panel">
+              <p>Last Name</p>
+              <div className="input-field">
+                <input
+                  type="text"
+                  name="LastName"
+                  placeholder="Last Name"
+                  id="LastName"
+                  value={values.LastName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </div>
+            </div>
+            <div className="password-input-panel">
+              <p>Email</p>
+              <div className="input-field">
+                <input
+                  type="Email"
+                  name="Email"
+                  id="Email"
+                  placeholder="Email"
+                  required
+                  value={values.Email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </div>
+            </div>
+            <div className="password-input-panel">
+              <p>Mobile Number</p>
+              <div className="input-field">
+                <input
+                  type="number"
+                  name="PhoneNo"
+                  placeholder="Mobile Number"
+                  id="PhoneNo"
+                  required
+                  value={values.PhoneNo}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </div>
+            </div>
+            <input
+              name="file"
+              id="file"
+              ref={filePicker}
+              type="file"
+              hidden
+              onChange={(e) => {
+                setFieldValue("file", e.target.files[0]);
+              }}
+              onBlur={handleBlur}
+            />
+          </div>
+        </div>
+      </Modal>
       <div className="User-panel">
         <div className="user-content">
           <Avatar
@@ -29,7 +194,10 @@ const ProfilePage = () => {
             alt="account avatar"
           />
           <div className="pic-edit-cont">
-            <TbEditCircle className="pic-edit" />
+            <TbEditCircle
+              className="pic-edit"
+              onClick={() => setShowProfileModal(true)}
+            />
           </div>
 
           <div className="greeting">
@@ -51,7 +219,6 @@ const ProfilePage = () => {
         <Password />
         <Interests />
       </div>
-
     </>
   );
 };

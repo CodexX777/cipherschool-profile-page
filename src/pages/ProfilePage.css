@@ -113,3 +113,34 @@
   max-height: 71vh;
   z-index: 99;
 }
+
+.profile-edit-panel-layout{
+  display: flex;
+  flex-direction: row;
+}
+.profile-pic-panel{
+  display: flex;
+  flex-direction: column;
+  gap:5rem;
+  width: 14rem;
+}
+.profile-pic-update{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-pic-panel .pic-edit-cont{
+  top:3rem;
+  right: 3.6rem;
+}
+
+
+
+.profile-panel-heading{
+  font-size: large;
+  font-weight: 500;
+  text-align: center;
+}
+
+
