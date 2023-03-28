@@ -11,7 +11,10 @@ import Heatmap from "../components/UIElements/Heatmap";
 import { ProfileSchema } from "../Schema/ProfileSchema";
 import Modal from "../components/UIElements/Modal";
 import { useFormik } from "formik";
+import axios from "axios";
 
+
+let uid = "";
 let avatarUrl =
   "https://lh3.googleusercontent.com/a/AGNmyxYRv_XBjPojMWq3Uv__44TEpK3JMtkqfPTxTo-oBw=s96-c";
 
@@ -36,6 +39,30 @@ const ProfilePage = () => {
 
   const profileSubmitHandler = (event) => {
     console.log(event);
+
+    const formData = new FormData();
+    formData.append("FirstName", event.prodName);
+    formData.append("LastName", event.prodStock);
+    formData.append("Email", event.prodPrice);
+    formData.append("PhoneNo", event.prodDesc);
+    formData.append("file", event.file);
+
+    axios
+      .patch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/user/userinfo/update/${uid}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     closeModalHandler();
   };
 
