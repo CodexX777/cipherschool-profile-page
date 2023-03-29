@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Heading from "../UIElements/Heading";
 import "./Socials.css";
 import {
@@ -13,10 +13,9 @@ import SocialLinks from "../UIElements/SocialLinks";
 import { LinkSchema } from "../../Schema/LinksSchema";
 import { useFormik } from "formik";
 import axios from "axios";
-
+import { AuthContext } from "../../context/AuthContext";
 
 let uid = "";
-
 
 const socialLinks = [
   {
@@ -52,6 +51,8 @@ const socialLinks = [
 ];
 
 const Socials = () => {
+  const auth = useContext(AuthContext);
+
   const [editState, setEditState] = useState(false);
 
   const initialValues = {
@@ -71,13 +72,13 @@ const Socials = () => {
     setEditState(!editState);
   };
 
-  const linkSubmitHandler = async(event) => {
-    event={
-      "userLinks":event
-    }
+  const linkSubmitHandler = async (event) => {
+    event = {
+      userLinks: event,
+    };
     axios
       .patch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/user/profile-details/socials/${uid}`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/user/profile-details/socials/${auth.uid}`,
         event,
         {
           headers: {
@@ -87,13 +88,31 @@ const Socials = () => {
       )
       .then((response) => {
         console.log(response.data);
+        const userData = JSON.parse(localStorage.getItem('userData'));
+        userData.links = response.data.links;
+        localStorage.setItem('userData', JSON.stringify(userData));
+        auth.links=response.data.links;
       })
       .catch((error) => {
         console.log(error);
       });
     console.log(event);
   };
-  const { values, handleBlur, touched, handleChange, errors, handleSubmit } =
+
+  useEffect(() => {
+
+    const setFormikValuesFromAuthLinks = (authLinks) => {
+      Object.keys(authLinks).forEach((key) => {
+       setFieldValue(key, authLinks[key]);
+      });
+    };
+    if(auth.links)
+    setFormikValuesFromAuthLinks(auth.links);
+
+
+  }, [auth.links]);
+
+  const { values, handleBlur, touched, handleChange, errors, handleSubmit,setFieldValue } =
     useFormik({
       initialValues: initialValues,
       validationSchema: LinkSchema,

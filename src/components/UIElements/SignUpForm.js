@@ -15,11 +15,8 @@ const SignUpForm = (props) => {
   const {
     values,
     handleBlur,
-    touched,
     handleChange,
-    errors,
     handleSubmit,
-    resetForm,
   } = useFormik({
     initialValues: SignupInitialValues,
     validationSchema: SignUpSchema,
@@ -125,7 +122,7 @@ const SignUpForm = (props) => {
             />
           </div>
         </div>
-        <button type="button" onClick={() => props.setAuthState(false)} />
+        <button className="goto-login" type="button" onClick={() => props.setAuthState(false)} >Login Instead</button>
       </div>
     </Modal>
   );

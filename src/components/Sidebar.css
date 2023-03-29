@@ -18,6 +18,17 @@
 .cust-icon {
   font-size: 2rem;
 }
+.goto-login{
+  position: relative;
+  width: fit-content;
+  padding: 0.2rem;
+  border-radius: 0.2rem;
+  outline: none;
+  border: none;
+  background-color: white;
+}
+
+
 a {
   text-decoration: none;
   color: inherit;

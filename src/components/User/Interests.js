@@ -1,17 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Heading from "../UIElements/Heading";
 import "./Interests.css";
 import Modal from "../UIElements/Modal";
 import { useFormik } from "formik";
 import InterestList from "./InterestList";
 import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
 
-const initialValues = {
-  options: [],
-};
+const initialValues={
+  options:[]
+}
 
-
-let uid = "";
 const options = [
   { name: "App Development", id: 0 },
   { name: "Web Development", id: 1 },
@@ -23,33 +22,55 @@ const options = [
   { name: "Others", id: 7 },
 ];
 const Interests = () => {
-  const [selectedOptions, setSelectedOptions] = useState([]);
-
   const [showModal, setShowModal] = useState(false);
 
-  const interestSubmitHandler = async(event) => {
-    axios
-    .patch(
-      `${process.env.REACT_APP_BACKEND_URL}/api/user/profile-details/interests/${uid}`,
-      event,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  const auth = useContext(AuthContext);
 
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const interestSubmitHandler = async (event) => {
+    axios
+      .patch(
+        `${process.env.REACT_APP_BACKEND_URL}/api/user/profile-details/interests/${auth.uid}`,
+        event,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+
+        const userData = JSON.parse(localStorage.getItem("userData"));
+        userData.interests = response.data.interests;
+        localStorage.setItem("userData", JSON.stringify(userData));
+        auth.interests=response.data.interests;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     console.log(event);
     formik.resetForm();
     closeModalHandler();
   };
+
+ 
+
+  useEffect(() => {
+    if (auth.interests) {
+      let newoptions=[...auth.interests];
+      
+      setSelectedOptions(newoptions);
+    }
+    formik.setFieldValue("options", auth.interests);
+    
+  }, [auth.interests]);
+
+
+
+  
 
   const formik = useFormik({
     initialValues,

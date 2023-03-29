@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import Heading from "../UIElements/Heading";
 import "./ProfInfo.css";
 import { useFormik } from "formik";
 import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
 
 
 
-let uid = "";
 
 const ProfInfo = () => {
+
+
+  const auth =useContext(AuthContext);
+  
   const [editInfo, setEditInfo] = useState(false);
 
   const initialValues = {
@@ -24,7 +28,7 @@ const ProfInfo = () => {
 
     axios
     .patch(
-      `${process.env.REACT_APP_BACKEND_URL}/api/user/profile-details/profinfo/${uid}`,
+      `${process.env.REACT_APP_BACKEND_URL}/api/user/profile-details/profinfo/${auth.uid}`,
       event,
       {
         headers: {

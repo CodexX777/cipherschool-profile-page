@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import Heading from "../UIElements/Heading";
 import Modal from "../UIElements/Modal";
 import "./Password.css";
@@ -6,11 +6,13 @@ import { useFormik } from "formik";
 import { ChangePassword } from "../../Schema/ChangePassword";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import axios from "axios";
+import { AuthContext } from "../../context/AuthContext";
 
-
-let uid = "";
 
 const Password = () => {
+
+  const auth=useContext(AuthContext);
+
   const [showModal, setShowModal] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -33,7 +35,7 @@ const Password = () => {
 
   const passwordSubmitHandler = async(event, { resetForm }) => {
     //connect with backend
-    event["uid"] = uid;
+    event["uid"] = auth.uid;
 
     axios
       .patch(

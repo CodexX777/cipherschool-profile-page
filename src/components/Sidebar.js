@@ -169,7 +169,6 @@ const Sidebar = () => {
               user.Links,
               user.Interests,
               user.ProfessionalInfo,
-              user.ExpirationDate,
               user.ProfilePic,
               user.AboutMe,
               user.PhoneNo
