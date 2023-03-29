@@ -8,15 +8,15 @@ export const useAuth = () => {
   const [tokenExpirationDate, setTokenExpirationDate] = useState();
 
   const [uid, setUid] = useState(null);
-  const [firstName, setfirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
-  const [email, setEmail] = useState(null);
+  const [firstName, setfirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const [links, setLinks] = useState({});
   const [interest, setInterests] = useState([]);
   const [professionalInfo, setProfessionalInfo] = useState({});
   const [profilePic, setprofilePic] = useState(null);
-  const [aboutMe, setAboutMe] = useState(null);
-  const [phoneNo, setPhoneNo] = useState(null);
+  const [aboutMe, setAboutMe] = useState("");
+  const [phoneNo, setPhoneNo] = useState(0);
   const login = useCallback(
     (
       id,
@@ -27,11 +27,16 @@ export const useAuth = () => {
       links,
       interests,
       professionalInfo,
-      expirationDate,
       profilePic,
       aboutMe,
-      phoneNo
+      phoneNo,
+      expirationDate
     ) => {
+        if(profilePic==="https://s3.amazonaws.com/"){
+            setprofilePic(null);
+        }else{
+            setprofilePic(profilePic);
+        }
       setUid(id);
       setIsLoggedIn(token);
       setfirstName(firstName);
@@ -40,7 +45,7 @@ export const useAuth = () => {
       setLastName(lastName);
       setLinks(links);
       setProfessionalInfo(professionalInfo);
-      setprofilePic(profilePic);
+      
       setAboutMe(aboutMe);
       setPhoneNo(phoneNo);
       const tokenExpirationDate =
@@ -53,6 +58,15 @@ export const useAuth = () => {
           userId: id,
           token: token,
           expiration: tokenExpirationDate.toISOString(),
+          email: email,
+          firstName: firstName,
+          lastName: lastName,
+          profilePic: profilePic,
+          phoneNo: phoneNo,
+          links: links,
+          interests: interests,
+          professionalInfo: professionalInfo,
+          aboutMe: aboutMe,
         })
       );
     },
@@ -62,14 +76,14 @@ export const useAuth = () => {
   const logout = useCallback(() => {
     setUid(null);
     setIsLoggedIn(null);
-    setfirstName(null);
-    setEmail(null);
-    setInterests(null);
-    setLastName(null);
-    setLinks(null);
-    setProfessionalInfo(null);
-    setAboutMe(null);
-    setPhoneNo(null);
+    setfirstName("");
+    setEmail("");
+    setInterests([]);
+    setLastName("");
+    setLinks({});
+    setProfessionalInfo({});
+    setAboutMe("");
+    setPhoneNo(0);
     setprofilePic(null);
     setTokenExpirationDate(null);
     localStorage.removeItem("userData");
@@ -95,8 +109,16 @@ export const useAuth = () => {
     ) {
       login(
         storedData.userId,
-        storedData.address,
         storedData.token,
+        storedData.firstName,
+        storedData.lastName,
+        storedData.email,
+        storedData.links,
+        storedData.interests,
+        storedData.professionalInfo,
+        storedData.profilePic,
+        storedData.aboutMe,
+        storedData.phoneNo,
         new Date(storedData.expiration)
       );
     }
