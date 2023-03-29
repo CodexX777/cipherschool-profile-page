@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef ,useContext} from "react";
 import "./ProfilePage.css";
 import Avatar from "../components/UIElements/Avatar";
 import { TbEditCircle } from "react-icons/tb";
@@ -13,16 +13,22 @@ import Modal from "../components/UIElements/Modal";
 import { useFormik } from "formik";
 import axios from "axios";
 
+import { AuthContext } from "../context/AuthContext";
 
-let uid = "";
-let avatarUrl =
-  "https://lh3.googleusercontent.com/a/AGNmyxYRv_XBjPojMWq3Uv__44TEpK3JMtkqfPTxTo-oBw=s96-c";
+
+
+
+// let avatarUrl =
+//   "https://lh3.googleusercontent.com/a/AGNmyxYRv_XBjPojMWq3Uv__44TEpK3JMtkqfPTxTo-oBw=s96-c";
 
 let UserName = "Shivang verma";
 let UserMail = "shivang260279@gmail.com";
 let followers = 0;
 
 const ProfilePage = () => {
+
+  const auth=useContext(AuthContext);
+
   const [showProfileModal, setShowProfileModal] = useState(false);
 
   const [preview, setPreview] = useState({});
@@ -49,7 +55,7 @@ const ProfilePage = () => {
 
     axios
       .patch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/user/userinfo/update/${uid}`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/user/userinfo/update/${auth.uid}`,
         formData,
         {
           headers: {
@@ -129,7 +135,7 @@ const ProfilePage = () => {
                 className="user-avatar"
                 height="6"
                 width="6"
-                src={Object.keys(preview).length ? preview : avatarUrl}
+                src={Object.keys(preview).length ? preview : auth.profilePic}
                 alt="account avatar"
               />
               <div className="pic-edit-cont">
@@ -217,7 +223,7 @@ const ProfilePage = () => {
             className="user-avatar"
             height="5"
             width="5"
-            src={avatarUrl}
+            src={auth.profilePic}
             alt="account avatar"
           />
           <div className="pic-edit-cont">
