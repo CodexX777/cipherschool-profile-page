@@ -129,7 +129,7 @@ const Sidebar = () => {
             },
           })
           .then((response) => {
-            user=response.data;
+            user = response.data;
             console.log(user);
             auth.login(
               user.uid,
@@ -149,7 +149,6 @@ const Sidebar = () => {
           .catch((error) => {
             console.log(error);
           });
-        
       } else {
         //login
         axios
@@ -159,7 +158,7 @@ const Sidebar = () => {
             },
           })
           .then((response) => {
-            user=response.data;
+            user = response.data;
             auth.login(
               user.uid,
               user.token,
@@ -177,7 +176,6 @@ const Sidebar = () => {
           .catch((error) => {
             console.log(error);
           });
-         
       }
     } catch (error) {}
 
@@ -191,9 +189,7 @@ const Sidebar = () => {
 
   return (
     <>
-      {auth.sideBarOpen && (
-        <Backdrop onClick={auth.sideBarToggle} />
-      )}
+      {auth.sideBarOpen && <Backdrop onClick={auth.sideBarToggle} />}
 
       {authState ? (
         <SignUpForm

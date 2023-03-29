@@ -12,7 +12,7 @@ export const useAuth = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [links, setLinks] = useState({});
-  const [interest, setInterests] = useState([]);
+  const [interests, setInterests] = useState([]);
   const [professionalInfo, setProfessionalInfo] = useState({});
   const [profilePic, setprofilePic] = useState(null);
   const [aboutMe, setAboutMe] = useState("");
@@ -41,7 +41,7 @@ export const useAuth = () => {
       setIsLoggedIn(token);
       setfirstName(firstName);
       setEmail(email);
-      setInterests(interests);
+      setInterests(()=>(JSON.parse(JSON.stringify(interests))));
       setLastName(lastName);
       setLinks(links);
       setProfessionalInfo(professionalInfo);
@@ -131,7 +131,7 @@ export const useAuth = () => {
     isLoggedIn,
     firstName,
     lastName,
-    interest,
+    interests,
     links,
     profilePic,
     professionalInfo,

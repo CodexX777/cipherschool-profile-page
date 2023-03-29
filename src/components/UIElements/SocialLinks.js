@@ -13,7 +13,7 @@ const SocialLinks = (props) => {
             className="link-url"
             name={props.name}
             onChange={props.handleChange}
-            value={props.values.name}
+            value={props.values}
             placeholder={props.placeholder}
             onBlur={props.handleBlur}
             disabled={!props.editState}

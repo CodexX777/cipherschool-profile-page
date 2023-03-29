@@ -18,8 +18,6 @@ import Navigation from "./components/Navbar/Navigation";
 
 const App = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
-
- 
   const sideBarToggle = useCallback(() => {
     setSideBarOpen(!sideBarOpen);
   }, [sideBarOpen]);
@@ -31,7 +29,7 @@ const App = () => {
     isLoggedIn,
     firstName,
     lastName,
-    interest,
+    interests,
     links,
     profilePic,
     professionalInfo,
@@ -39,8 +37,6 @@ const App = () => {
     aboutMe,
     phoneNo,
   } = useAuth();
-
-  
 
   return (
     <AuthContext.Provider
@@ -53,7 +49,7 @@ const App = () => {
         isLoggedIn,
         firstName,
         lastName,
-        interest,
+        interests,
         links,
         profilePic,
         professionalInfo,
@@ -61,7 +57,6 @@ const App = () => {
         aboutMe,
         phoneNo,
       }}
-
     >
       <BrowserRouter>
         <Navigation>

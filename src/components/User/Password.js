@@ -20,9 +20,9 @@ const Password = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const showPasswordHandler = (idName) => {
-    if (idName == "ConfirmPassword")
+    if (idName === "ConfirmPassword")
       setShowConfirmPassword(!showConfirmPassword);
-    else if (idName == "NewPassword") setShowNewPassword(!showNewPassword);
+    else if (idName === "NewPassword") setShowNewPassword(!showNewPassword);
     else setShowCurrentPassword(!showCurrentPassword);
 
     let element = document.getElementById(idName);
@@ -63,6 +63,9 @@ const Password = () => {
   };
 
   const closeModalHandler = () => {
+    setShowConfirmPassword(false);
+    setShowCurrentPassword(false);
+    setShowNewPassword(false);
     resetForm();
     setShowModal(false);
   };
@@ -76,9 +79,7 @@ const Password = () => {
   const {
     values,
     handleBlur,
-    touched,
     handleChange,
-    errors,
     handleSubmit,
     resetForm,
   } = useFormik({
@@ -139,9 +140,6 @@ const Password = () => {
                 />
               )}
             </div>
-            {/* {errors.CurrentPassword && touched.CurrentPassword && (
-              <p className="form-input-error">{errors.CurrentPassword}</p>
-            )} */}
           </div>
           <div className="password-input-panel">
             <p>New Password</p>
@@ -170,10 +168,6 @@ const Password = () => {
                 />
               )}
             </div>
-
-            {/* {errors.NewPassword && touched.NewPassword && (
-              <p className="form-input-error">{errors.NewPassword}</p>
-            )} */}
           </div>
           <div className="password-input-panel">
             <p>Confirm Password</p>
@@ -202,10 +196,6 @@ const Password = () => {
                 />
               )}
             </div>
-
-            {/* {errors.ConfirmPassword && touched.ConfirmPassword && (
-              <p className="form-input-error">{errors.ConfirmPassword}</p>
-            )} */}
           </div>
         </div>
       </Modal>

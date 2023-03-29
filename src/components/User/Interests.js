@@ -7,9 +7,9 @@ import InterestList from "./InterestList";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 
-const initialValues={
-  options:[]
-}
+const initialValues = {
+  options: [],
+};
 
 const options = [
   { name: "App Development", id: 0 },
@@ -21,6 +21,7 @@ const options = [
   { name: "Data Science", id: 6 },
   { name: "Others", id: 7 },
 ];
+
 const Interests = () => {
   const [showModal, setShowModal] = useState(false);
 
@@ -45,7 +46,7 @@ const Interests = () => {
         const userData = JSON.parse(localStorage.getItem("userData"));
         userData.interests = response.data.interests;
         localStorage.setItem("userData", JSON.stringify(userData));
-        auth.interests=response.data.interests;
+        auth.interests = response.data.interests;
       })
       .catch((error) => {
         console.log(error);
@@ -56,21 +57,16 @@ const Interests = () => {
     closeModalHandler();
   };
 
- 
-
-  useEffect(() => {
-    if (auth.interests) {
-      let newoptions=[...auth.interests];
-      
-      setSelectedOptions(newoptions);
-    }
-    formik.setFieldValue("options", auth.interests);
+  useEffect(()=>{
     
-  }, [auth.interests]);
+    if(auth.interests){
+      console.log("after fetch"+auth.interests);
+      let newOptions = [...auth.interests];
+      setSelectedOptions(newOptions);
+    }
+  },[auth.interests])
 
-
-
-  
+ 
 
   const formik = useFormik({
     initialValues,

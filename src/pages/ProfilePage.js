@@ -1,4 +1,4 @@
-import React, { useState, useRef ,useContext} from "react";
+import React, { useState, useRef, useContext } from "react";
 import "./ProfilePage.css";
 import Avatar from "../components/UIElements/Avatar";
 import { TbEditCircle } from "react-icons/tb";
@@ -12,22 +12,15 @@ import { ProfileSchema } from "../Schema/ProfileSchema";
 import Modal from "../components/UIElements/Modal";
 import { useFormik } from "formik";
 import axios from "axios";
-
+import BlankPic from "../utility/blankProfile.jpg";
 import { AuthContext } from "../context/AuthContext";
-
-
-
-
-// let avatarUrl =
-//   "https://lh3.googleusercontent.com/a/AGNmyxYRv_XBjPojMWq3Uv__44TEpK3JMtkqfPTxTo-oBw=s96-c";
 
 let UserName = "Shivang verma";
 let UserMail = "shivang260279@gmail.com";
 let followers = 0;
 
 const ProfilePage = () => {
-
-  const auth=useContext(AuthContext);
+  const auth = useContext(AuthContext);
 
   const [showProfileModal, setShowProfileModal] = useState(false);
 
@@ -43,14 +36,14 @@ const ProfilePage = () => {
     setShowProfileModal(false);
   };
 
-  const profileSubmitHandler = async(event) => {
+  const profileSubmitHandler = async (event) => {
     console.log(event);
 
     const formData = new FormData();
-    formData.append("FirstName", event.prodName);
-    formData.append("LastName", event.prodStock);
-    formData.append("Email", event.prodPrice);
-    formData.append("PhoneNo", event.prodDesc);
+    formData.append("FirstName", event.FirstName);
+    formData.append("LastName", event.LastName);
+    formData.append("Email", event.Email);
+    formData.append("PhoneNo", event.PhoneNo);
     formData.append("file", event.file);
 
     axios
@@ -59,7 +52,7 @@ const ProfilePage = () => {
         formData,
         {
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
         }
       )
@@ -80,20 +73,12 @@ const ProfilePage = () => {
     file: null,
   };
 
-  const {
-    values,
-    handleBlur,
-    touched,
-    handleChange,
-    errors,
-    handleSubmit,
-    setFieldValue,
-    resetForm,
-  } = useFormik({
-    initialValues: initialValues,
-    validationSchema: ProfileSchema,
-    onSubmit: profileSubmitHandler,
-  });
+  const { values, handleBlur, handleChange, handleSubmit, setFieldValue } =
+    useFormik({
+      initialValues: initialValues,
+      validationSchema: ProfileSchema,
+      onSubmit: profileSubmitHandler,
+    });
 
   if (values.file) {
     const reader = new FileReader();
@@ -135,7 +120,13 @@ const ProfilePage = () => {
                 className="user-avatar"
                 height="6"
                 width="6"
-                src={Object.keys(preview).length ? preview : auth.profilePic}
+                src={
+                  Object.keys(preview).length
+                    ? preview
+                    : auth.profilePic
+                    ? auth.profilePic
+                    : BlankPic
+                }
                 alt="account avatar"
               />
               <div className="pic-edit-cont">
@@ -223,7 +214,7 @@ const ProfilePage = () => {
             className="user-avatar"
             height="5"
             width="5"
-            src={auth.profilePic}
+            src={auth.profilePic ? auth.profilePic : BlankPic}
             alt="account avatar"
           />
           <div className="pic-edit-cont">
@@ -235,8 +226,8 @@ const ProfilePage = () => {
 
           <div className="greeting">
             <h2>Hello,</h2>
-            <h1>{UserName}</h1>
-            <h4>{UserMail}</h4>
+            <h1>{auth.firstName?auth.firstName:"There."}</h1>
+            <h4>{auth.email?auth.email:""}</h4>
           </div>
         </div>
         <div className="followers">

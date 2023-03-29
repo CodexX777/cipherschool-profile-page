@@ -55,13 +55,13 @@ const Socials = () => {
 
   const [editState, setEditState] = useState(false);
 
-  const initialValues = {
+  let initialValues = {
     LinkedIn: "",
-    Twitter: "",
-    Facebook: "",
-    Instagram: "",
-    Website: "",
     Github: "",
+    Instagram: "",
+    Facebook: "",
+    Website: "",
+    Twitter: "",
   };
 
   const socialSubmitHandler = (btnState, setBtnState) => {
@@ -88,36 +88,42 @@ const Socials = () => {
       )
       .then((response) => {
         console.log(response.data);
-        const userData = JSON.parse(localStorage.getItem('userData'));
+        const userData = JSON.parse(localStorage.getItem("userData"));
         userData.links = response.data.links;
-        localStorage.setItem('userData', JSON.stringify(userData));
-        auth.links=response.data.links;
+        localStorage.setItem("userData", JSON.stringify(userData));
+        auth.links = response.data.links;
+        console.log(auth.links);
       })
       .catch((error) => {
         console.log(error);
       });
-    console.log(event);
+    
   };
 
+  // useEffect(() => {
+  //   if (Object.keys(auth.links).length > 0) {
+  //     initialValues = auth.links;
+  //   }
+  // }, [auth.links]);
+
   useEffect(() => {
-
-    const setFormikValuesFromAuthLinks = (authLinks) => {
-      Object.keys(authLinks).forEach((key) => {
-       setFieldValue(key, authLinks[key]);
+    if (Object.keys(auth.links).length > 0) {
+      Object.keys(auth.links).forEach((key) => {
+        setFieldValue(key, auth.links[key]);
       });
-    };
-    if(auth.links)
-    setFormikValuesFromAuthLinks(auth.links);
-
-
+      console.log(values)
+    }
   }, [auth.links]);
 
-  const { values, handleBlur, touched, handleChange, errors, handleSubmit,setFieldValue } =
+
+  const { values, handleBlur, handleChange, handleSubmit, setFieldValue } =
     useFormik({
       initialValues: initialValues,
       validationSchema: LinkSchema,
       onSubmit: linkSubmitHandler,
     });
+
+
 
   return (
     <>
@@ -135,7 +141,7 @@ const Socials = () => {
                 key={link.LinkName}
                 name={link.LinkName}
                 placeholder={link.placeholder}
-                values={values}
+                values={values[link.LinkName]}
                 icon={link.icon}
                 handleChange={handleChange}
                 onBlur={handleBlur}

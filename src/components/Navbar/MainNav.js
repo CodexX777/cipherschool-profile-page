@@ -8,6 +8,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import { BiSearch } from "react-icons/bi";
 import { CgBell } from "react-icons/cg";
 import Avatar from "../UIElements/Avatar";
+import BlankPic from "../../utility/blankProfile.jpg";
 
 let notification = 0; // for real purpose this has to be managed by useState and should be fetched by the backend
 let tokens = 0;
@@ -16,10 +17,9 @@ const MainNav = () => {
   const auth = useContext(AuthContext);
   const [showSearchOptions, setSearchOptions] = useState("none");
   const [showAccountOptions, setAccountOptions] = useState("none");
-  let avatarUrl = auth.profilePic;
+
 
   const accountToggle = () => {
-    
     let element = document.getElementById("account-options");
     if (showAccountOptions === "none") {
       element.style.display = "block";
@@ -104,11 +104,7 @@ const MainNav = () => {
             className="nav-avatar"
             height="1.5"
             width="1.5"
-            src={
-              avatarUrl
-                ? avatarUrl
-                : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
-            }
+            src={auth.profilePic ? auth.profilePic : BlankPic}
             alt="account avatar"
             onClick={accountToggle}
           />
