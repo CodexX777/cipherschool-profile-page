@@ -140,10 +140,9 @@ const Sidebar = () => {
               user.Links,
               user.Interests,
               user.ProfessionalInfo,
-              user.ExpirationDate,
               user.ProfilePic,
               user.AboutMe,
-              user.PhoneNo
+              user.PhoneNo,
             );
           })
           .catch((error) => {
@@ -170,14 +169,16 @@ const Sidebar = () => {
               user.ProfessionalInfo,
               user.ProfilePic,
               user.AboutMe,
-              user.PhoneNo
+              user.PhoneNo,
             );
           })
           .catch((error) => {
             console.log(error);
           });
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
 
     resetForm();
     closeModalHandler();
