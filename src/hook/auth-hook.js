@@ -32,25 +32,25 @@ export const useAuth = () => {
       phoneNo,
       expirationDate
     ) => {
-        if(profilePic==="https://s3.amazonaws.com/"){
-            setprofilePic(null);
-        }else{
-            setprofilePic(profilePic);
-        }
+      if (profilePic === "https://s3.amazonaws.com/") {
+        setprofilePic(null);
+      } else {
+        setprofilePic(profilePic);
+      }
       setUid(id);
       setIsLoggedIn(token);
       setfirstName(firstName);
       setEmail(email);
-      setInterests(()=>(JSON.parse(JSON.stringify(interests))));
+      setInterests(interests);
       setLastName(lastName);
       setLinks(links);
       setProfessionalInfo(professionalInfo);
-      
+
       setAboutMe(aboutMe);
       setPhoneNo(phoneNo);
-      const tokenExpirationDate =
-        expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60);
-
+      const tokenExpirationDate = expirationDate
+        ? new Date(expirationDate)
+        : new Date(new Date().getTime() + 1000 * 60 * 60);
       setTokenExpirationDate(tokenExpirationDate);
       localStorage.setItem(
         "userData",
@@ -91,6 +91,7 @@ export const useAuth = () => {
 
   useEffect(() => {
     if (isLoggedIn && tokenExpirationDate) {
+      console.log(tokenExpirationDate);
       const remainingTime =
         tokenExpirationDate.getTime() - new Date().getTime();
 

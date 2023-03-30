@@ -15,7 +15,7 @@ import { useFormik } from "formik";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 
-let uid = "";
+
 
 const socialLinks = [
   {
@@ -65,7 +65,7 @@ const Socials = () => {
   };
 
   const socialSubmitHandler = (btnState, setBtnState) => {
-    if (btnState == true) {
+    if (btnState === true) {
       handleSubmit();
     }
     setBtnState(!btnState);
@@ -100,11 +100,7 @@ const Socials = () => {
     
   };
 
-  // useEffect(() => {
-  //   if (Object.keys(auth.links).length > 0) {
-  //     initialValues = auth.links;
-  //   }
-  // }, [auth.links]);
+
 
   useEffect(() => {
     if (Object.keys(auth.links).length > 0) {

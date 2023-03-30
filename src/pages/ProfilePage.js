@@ -15,8 +15,6 @@ import axios from "axios";
 import BlankPic from "../utility/blankProfile.jpg";
 import { AuthContext } from "../context/AuthContext";
 
-let UserName = "Shivang verma";
-let UserMail = "shivang260279@gmail.com";
 let followers = 0;
 
 const ProfilePage = () => {
